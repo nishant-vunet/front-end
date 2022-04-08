@@ -571,7 +571,7 @@
     "@opentelemetry/sdk-trace-base" "~1.0.0"
     "@opentelemetry/sdk-trace-node" "~1.0.0"
 
-"@opentelemetry/sdk-trace-base@~1.0.0", "@opentelemetry/sdk-trace-base@1.0.1":
+"@opentelemetry/sdk-trace-base@^1.0.1", "@opentelemetry/sdk-trace-base@~1.0.0", "@opentelemetry/sdk-trace-base@1.0.1":
   "integrity" "sha512-JVSAepTpW7dnqfV7XFN0zHj1jXGNd5OcvIGQl76buogqffdgJdgJWQNrOuUJaus56zrOtlzqFH+YtMA9RGEg8w=="
   "resolved" "https://registry.npmjs.org/@opentelemetry/sdk-trace-base/-/sdk-trace-base-1.0.1.tgz"
   "version" "1.0.1"

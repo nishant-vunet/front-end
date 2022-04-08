@@ -525,10 +525,18 @@ const { SemanticResourceAttributes  } = require('@opentelemetry/semantic-convent
 const exporter = new _exporterTraceOtlpHttp.OTLPTraceExporter({
     url: 'http://20.219.22.30:4318/v1/traces'
 });
+/*const provider = new WebTracerProvider({
+ resource: new Resource({
+
+   [SemanticResourceAttributes.SERVICE_NAME]: 'browser',
+ }),
+});
+*/ const resources = new Resource({
+    'service.name': "frontend-browser",
+    'application': "Sock Shop"
+});
 const provider = new _sdkTraceWeb.WebTracerProvider({
-    resource: new Resource({
-        [SemanticResourceAttributes.SERVICE_NAME]: 'frontend-browser'
-    })
+    resource: resources
 });
 provider.addSpanProcessor(new _sdkTraceBase.BatchSpanProcessor(exporter));
 provider.register({
@@ -3472,7 +3480,7 @@ var _semanticConventions = require("@opentelemetry/semantic-conventions");
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */ var _a;
-var SDK_INFO = (_a = {}, _a[_semanticConventions.SemanticResourceAttributes.TELEMETRY_SDK_NAME] = 'opentelemetry', _a[_semanticConventions.SemanticResourceAttributes.PROCESS_RUNTIME_NAME] = 'frontend-browser', _a[_semanticConventions.SemanticResourceAttributes.TELEMETRY_SDK_LANGUAGE] = _semanticConventions.TelemetrySdkLanguageValues.WEBJS, _a[_semanticConventions.SemanticResourceAttributes.TELEMETRY_SDK_VERSION] = _version.VERSION, _a);
+var SDK_INFO = (_a = {}, _a[_semanticConventions.SemanticResourceAttributes.TELEMETRY_SDK_NAME] = 'opentelemetry', _a[_semanticConventions.SemanticResourceAttributes.PROCESS_RUNTIME_NAME] = 'browser', _a[_semanticConventions.SemanticResourceAttributes.TELEMETRY_SDK_LANGUAGE] = _semanticConventions.TelemetrySdkLanguageValues.WEBJS, _a[_semanticConventions.SemanticResourceAttributes.TELEMETRY_SDK_VERSION] = _version.VERSION, _a);
 
 },{"../../version":"2JrQh","@opentelemetry/semantic-conventions":"lCgfj","@parcel/transformer-js/src/esmodule-helpers.js":"5hUVX"}],"2JrQh":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");

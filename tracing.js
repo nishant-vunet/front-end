@@ -6,7 +6,8 @@ const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumenta
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-grpc');
 const { Resource } = require('@opentelemetry/resources');
 const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions');
-const { BasicTracerProvider, SimpleSpanProcessor } = require('@opentelemetry/tracing');
+const { BasicTracerProvider, SimpleSpanProcessor,BatchSpanProcessor } = require('@opentelemetry/tracing');
+const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node')
 
 
 const collectorOptions = {
@@ -15,16 +16,34 @@ const collectorOptions = {
 //  url: '<collector-hostname>:<port>',
 };
 
-const provider = new BasicTracerProvider({
+/*const provider = new BasicTracerProvider({
   resource: new Resource({
     [SemanticResourceAttributes.SERVICE_NAME]: 'front-end',
+    [SemanticResourceAttributes.APPLICATION]: 'ShockShop',
   }),
-});
+});*/
+
+/*const provider = new NodeTracerProvider({
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: 'front-end', // Service name that should be listed in jaeger ui
+    [SemanticResourceAttributes.APPLICATION]: 'ShockShop',
+  }),
+});*/
+
+
+const resources = new Resource({
+    'service.name': 'frontend',
+    'application': 'Sock Shop',
+    //'ANY_OTHER_ATTRIBUTE_KEY': 'ANY_OTHER_ATTRIBUTE_VALUE',
+ });
+
+const provider = new NodeTracerProvider({ resource: resources });
+
 
 // configure the SDK to export telemetry data to the console
 // enable all auto-instrumentations from the meta package
 const traceExporter = new OTLPTraceExporter(collectorOptions);
-provider.addSpanProcessor(new SimpleSpanProcessor(traceExporter));
+provider.addSpanProcessor(new BatchSpanProcessor(traceExporter));
 provider.register();
 ['SIGINT', 'SIGTERM'].forEach(signal => {
   process.on(signal, () => provider.shutdown().catch(console.error));
